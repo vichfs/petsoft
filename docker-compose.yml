@@ -1,4 +1,4 @@
-version: '2'
+version: '3.8'
 services:
   php:
     image: yiisoftware/yii2-php:8.2-apache
@@ -7,3 +7,26 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    networks:
+      - petsoft
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: petsoft
+      POSTGRES_USER: petsoft
+      POSTGRES_PASSWORD: foo@bar123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - petsoft
+
+volumes:
+  postgres_data:
+
+networks:
+  petsoft:
+    driver: bridge
+
