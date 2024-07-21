@@ -43,6 +43,18 @@ $config = [
             ],
         ],
         'db' => $db,
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                        // Add more files if needed
+                    ],
+                ],
+            ],
+        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -53,7 +65,18 @@ $config = [
         */
     ],
     'params' => $params,
+    'language' => 'pt-BR',
 ];
+
+
+$config['params']['numericMask'] = [
+    'groupSeparator' => '.',
+    'radixPoint' => ','
+];
+if ($config['language'] === 'en-US') {
+    $config['params']['numericMask']['groupSeparator'] = ',';
+    $config['params']['numericMask']['radixPoint'] = '.';
+}
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
