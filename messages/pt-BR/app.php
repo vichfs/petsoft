@@ -19,4 +19,6 @@ return [
     'Update' => 'Atualizar',
     'Delete' => 'Excluir',
     'Are you sure you want to delete this item?' => 'Tem certeza que deseja excluir o item?',
+    'Extra Cost' => 'Custo Extra',
+    'Manage service components' => 'Gerenciar componentes do serviço',
 ];
