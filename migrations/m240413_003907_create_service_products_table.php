@@ -23,6 +23,14 @@ class m240413_003907_create_service_products_table extends Migration
             'FK__service_products__service_id',
             '{{%service_products}}',
             'service_id',
+            '{{%services}}',
+            'id'
+        );
+
+        $this->addForeignKey(
+            'FK__service_products__product_id',
+            '{{%service_products}}',
+            'product_id',
             '{{%products}}',
             'id'
         );
@@ -34,7 +42,7 @@ class m240413_003907_create_service_products_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey('FK__service_products__service_id', '{{%service_products}}');
-        $this->dropForeignKey('FK__service_products__service_id', '{{%service_products}}');
+        $this->dropForeignKey('FK__service_products__product_id', '{{%service_products}}');
         $this->dropTable('{{%service_products}}');
     }
 }

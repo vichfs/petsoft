@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use \kartik\form\ActiveForm;
 use kartik\number\NumberControl;
 
-var_dump($model->getErrors());
 ?>
 
 <div class="service-form">

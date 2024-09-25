@@ -2,6 +2,7 @@
 
 return [
     'Products' => 'Produtos',
+    'Product' => 'Produto',
     'Create Product' => 'Criar Produto',
     'Welcome' => 'Bem-vindo',
     'Logout' => 'Sair',
@@ -20,5 +21,14 @@ return [
     'Delete' => 'Excluir',
     'Are you sure you want to delete this item?' => 'Tem certeza que deseja excluir o item?',
     'Extra Cost' => 'Custo Extra',
-    'Manage service components' => 'Gerenciar componentes do serviço',
+    'Service Components' => 'Componentes do Serviço',
+    'Select the product' => 'Selecione o produto',
+    'Amount' => 'Quantidade',
+    'Add product to service' => 'Adicionar produto ao serviço',
+    'Add' => 'Adicionar',
+    'Service not found' => 'Serviço não encontrado',
+    'Product not found' => 'Produto não encontrado',
+    'The amount must be a number (greater than zero)' => 'A quantidade deve ser um número (maior que zero)',
+    'Sorry! An error occurred and it was not possible to fulfill your request!' => 'Perdão! Um erro ocorreu e não  foi possível processar sua requisição',
+    'Product added successfully!' => 'Produto adicionado com sucesso!',
 ];

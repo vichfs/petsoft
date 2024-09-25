@@ -83,9 +83,14 @@ class Service extends \yii\db\ActiveRecord
         return new ServicesQuery(get_called_class());
     }
 
+    public function getServiceProducts()
+    {
+        return $this->hasMany(ServiceProduct::class, ['service_id' => 'id']);
+    }
+
     public function getProducts() {
         return $this->hasMany(Product::class, ['id' => 'product_id'])
-            ->viaTable('service_products', ['service_id' => 'id']);
+            ->via('serviceProducts');
     }
 
     public function afterFind()

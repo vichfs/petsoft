@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Product;
 use app\models\Service;
+use app\models\ServiceProduct;
 use app\models\ServiceSearch;
 use Yii;
 use yii\web\Controller;
@@ -112,8 +114,6 @@ class ServiceController extends Controller
      */
     public function actionDelete($id)
     {
-        // TODO: Delete products used by service:
-
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -121,7 +121,67 @@ class ServiceController extends Controller
 
     public function actionManageComponents($id)
     {
-        // TODO: LOAD MODEL, RENDER VIEW
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('manage-components', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionAddProductComponent($id)
+    {
+        $postData = $this->request->post();
+        $errors = [];
+        $serviceProduct = new ServiceProduct();
+
+        if (empty($id)) {
+            $errors[] = Yii::t('app', 'Service not found');
+        }
+
+        $product = Product::findOne(intval($postData['product_id'] ?? 0));
+        if (empty($product)) {
+            $errors[] = Yii::t('app', 'Product not found');
+        }
+
+        $amount = $postData['amount'] ?? 0;
+        if (empty($amount)) {
+            $errors[] = Yii::t('app', 'The amount must be a number (greater than zero)');
+        }
+
+        if (!empty($errors)) {
+            Yii::$app->session->setFlash('error', $errors);
+            return $this->redirect(['manage-components', 'id' => $id]);
+        }
+
+        $serviceProduct = ServiceProduct::findOne([
+            'service_id' => $id,
+            'product_id' => $product->id,
+        ]);
+
+        if (empty($serviceProduct)) {
+            $serviceProduct = new ServiceProduct();
+            $serviceProduct->service_id = $id;
+            $serviceProduct->product_id = $product->id;
+        }
+
+        $serviceProduct->amount_used = $amount;
+        if (!$serviceProduct->save()) {
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', 'Sorry! An error occurred and it was not possible to fulfill your request!')
+            );
+        } else {
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t('app', 'Product added successfully!')
+            );
+        }
+
+        return $this->redirect(['manage-components', 'id' => $id]);
     }
 
     /**
