@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class ServiceController extends Controller
 {
+    const GENERIC_ERROR_MESSAGE = 'Sorry! An error occurred and it was not possible to fulfill your request!';
     /**
      * @inheritDoc
      */
@@ -172,7 +173,7 @@ class ServiceController extends Controller
         if (!$serviceProduct->save()) {
             Yii::$app->session->setFlash(
                 'error',
-                Yii::t('app', 'Sorry! An error occurred and it was not possible to fulfill your request!')
+                Yii::t('app', self::GENERIC_ERROR_MESSAGE)
             );
         } else {
             Yii::$app->session->setFlash(
@@ -182,6 +183,32 @@ class ServiceController extends Controller
         }
 
         return $this->redirect(['manage-components', 'id' => $id]);
+    }
+
+    public function actionRemoveProductComponent()
+    {
+        $data = $this->request->get();
+        $serviceId = $data['service_id'] ?? null;
+        $productId = $data['product_id'] ?? null;
+
+        $countDel = ServiceProduct::deleteAll([
+            'product_id' => $productId,
+            'service_id' => $serviceId
+        ]);
+
+        if ($countDel) {
+            Yii::$app->session->setFlash(
+                'success',
+                Yii::t('app', 'Product removed successfully!')
+            );
+        } else {
+            Yii::$app->session->setFlash(
+                'error',
+                Yii::t('app', self::GENERIC_ERROR_MESSAGE)
+            );
+        }
+
+        return $this->redirect(['manage-components', 'id' => $serviceId]);
     }
 
     /**

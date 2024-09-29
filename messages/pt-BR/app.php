@@ -31,4 +31,5 @@ return [
     'The amount must be a number (greater than zero)' => 'A quantidade deve ser um número (maior que zero)',
     'Sorry! An error occurred and it was not possible to fulfill your request!' => 'Perdão! Um erro ocorreu e não  foi possível processar sua requisição',
     'Product added successfully!' => 'Produto adicionado com sucesso!',
+    'Product removed successfully!' => 'Produto removido com sucesso!',
 ];

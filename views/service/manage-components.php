@@ -3,7 +3,11 @@
 //var_dump($model);
 
 use app\models\Product;
+use kartik\dialog\Dialog;
+use kartik\icons\Icon;
 use kartik\number\NumberControl;
+use kartik\dialog\DialogAsset;
+use yii\bootstrap5\Html;
 
 $serviceProducts = $model->getServiceProducts()
     ->joinWith('product')
@@ -21,6 +25,11 @@ $css = <<<CSS
 CSS;
 
 $this->registerCss($css);
+
+Icon::map($this);
+DialogAsset::register($this);
+
+echo Dialog::widget(['overrideYiiConfirm' => true]);
 
 ?>
 
@@ -83,6 +92,7 @@ $this->registerCss($css);
                 <th class="text-center" scope="col"><?= Yii::t('app', 'Unidade') ?></th>
                 <th class="text-end" scope="col"><?= Yii::t('app', 'Quantidade') ?></th>
                 <th id="product-cost" class="text-end" scope="col"><?= Yii::t('app', 'Custo') ?></th>
+                <th class="text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -103,16 +113,26 @@ $this->registerCss($css);
                     <td class="text-end">
                         <?= Yii::$app->formatter->asCurrency($productCost) ?>
                     </td>
+                    <td class="text-center">
+                    <?php echo Html::a('Delete', ['remove-product-component', 'service_id' => $model->id, 'product_id' => $product->id], [
+    'class' => 'btn btn-danger',
+    'data' => [
+        'confirm' => 'Are you sure you want to delete this item?',
+        'method' => 'post',
+    ],
+]); ?>
+                    </td>
                 </tr>
                 <?php $totalCost += $productCost; ?>
             <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="3"></td>
+                <td colspan="3" class="text-end">Custo Total dos Produtos</td>
                 <td class="text-end" headers="product-cost">
                     <?= Yii::$app->formatter->asCurrency($totalCost) ?>
                 </td>
+                <td></td>
             </tr>
         </tfoot>
     </table>
