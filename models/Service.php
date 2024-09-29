@@ -98,4 +98,10 @@ class Service extends \yii\db\ActiveRecord
         $this->productIds = $this->getProducts()->select('id')->column();
         parent::afterFind();
     }
+
+    public function beforeDelete()
+    {
+        ServiceProduct::deleteAll(['service_id' => $this->id]);
+        return true;
+    }
 }
