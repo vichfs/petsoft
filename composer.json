@@ -21,7 +21,9 @@
         "kartik-v/yii2-widget-activeform": "dev-master",
         "kartik-v/yii2-number": "dev-master",
         "kartik-v/yii2-icons": "^1.4",
-        "kartik-v/yii2-dialog": "@dev"
+        "kartik-v/yii2-dialog": "@dev",
+        "kartik-v/yii2-widget-growl": "dev-master",
+        "kartik-v/yii2-widget-datepicker": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
