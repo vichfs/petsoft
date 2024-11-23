@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\H;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -35,12 +36,13 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'subscriber'], 'required'],
             [['date_last_purchase', 'created_at', 'updated_at'], 'safe'],
             [['avg_monthly_consumption'], 'number'],
             [['name', 'email'], 'string', 'max' => 255],
             [['email'], 'email'],
             [['phone'], 'string', 'max' => 13],
+            [['subscriber'], 'boolean'],
             [['comments'], 'string', 'max' => 2000],
         ];
     }
@@ -75,6 +77,7 @@ class Customer extends \yii\db\ActiveRecord
             'comments' => Yii::t('app', 'Comments'),
             'date_last_purchase' => Yii::t('app', 'Last Purchase'),
             'avg_monthly_consumption' => Yii::t('app', 'Avg. Monthly Consumption'),
+            'subscriber' => Yii::t('app', 'Subscriber'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
@@ -84,16 +87,9 @@ class Customer extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function beforeSave($insert) {
-        $dateLastPurchase = $this->date_last_purchase ?? '';
-        if (!empty($dateLastPurchase)) {
-            $mask = 'd/m/Y';
-            if (substr(Yii::$app->language, 0, 2) === 'en') {
-                $mask = 'm/d/Y';
-            }
-        }
+        $dateLastPurchase = H::date2obj($this->date_last_purchase ?? '');
 
-        $dateLastPurchase = \DateTime::createFromFormat($mask, $dateLastPurchase);
-        if (!$dateLastPurchase instanceof \DateTime) {
+        if (!$dateLastPurchase) {
             throw new \Exception(Yii::t('app', 'The date is invalid'));
         }
 

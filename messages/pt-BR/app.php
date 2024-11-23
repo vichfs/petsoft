@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'Yes' => 'Sim',
+    'No' => 'Não',
     'Products' => 'Produtos',
     'Product' => 'Produto',
     'Create Product' => 'Criar Produto',
@@ -50,4 +52,5 @@ return [
     'Comments' => 'Observações',
     'Last Purchase' => 'Última Compra',
     'Avg. Monthly Consumption' => 'Consumo Médio Mensal',
+    'Subscriber' => 'Clubinho',
 ];

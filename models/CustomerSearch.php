@@ -20,6 +20,7 @@ class CustomerSearch extends Customer
             [['id'], 'integer'],
             [['name', 'phone', 'email', 'comments', 'date_last_purchase', 'created_at', 'updated_at'], 'safe'],
             [['avg_monthly_consumption'], 'number'],
+            [['subscriber'], 'boolean'],
         ];
     }
 
@@ -62,6 +63,7 @@ class CustomerSearch extends Customer
             'id' => $this->id,
             'date_last_purchase' => $this->date_last_purchase,
             'avg_monthly_consumption' => $this->avg_monthly_consumption,
+            'subscriber' => $this->subscriber,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
@@ -69,7 +71,8 @@ class CustomerSearch extends Customer
         $query->andFilterWhere(['ilike', 'name', $this->name])
             ->andFilterWhere(['ilike', 'phone', $this->phone])
             ->andFilterWhere(['ilike', 'email', $this->email])
-            ->andFilterWhere(['ilike', 'comments', $this->comments]);
+            ->andFilterWhere(['ilike', 'comments', $this->comments])
+            ->andFilterWhere(['=', 'subscriber', $this->subscriber]);
 
         return $dataProvider;
     }

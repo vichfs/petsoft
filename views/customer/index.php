@@ -51,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'contentOptions' => ['style' => 'text-align: right;'],
             ],
+            'subscriber:boolean',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Customer $model) {

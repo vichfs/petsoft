@@ -41,6 +41,8 @@ if ($model->hasErrors()) {
         ], Yii::$app->params['numericMask'])
     ]) ?>
 
+    <?= $form->field($model, 'subscriber')->radioList([0 => Yii::t('app', 'No'), 1 => Yii::t('app', 'Yes')]) ?>
+
     <input id="form-token" type="hidden" name="<?= Yii::$app->request->csrfParam ?>" value="<?= Yii::$app->request->csrfToken ?>">
 
     <div class="form-group">

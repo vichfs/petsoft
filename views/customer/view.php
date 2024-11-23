@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'comments',
             'date_last_purchase:date',
             'avg_monthly_consumption:currency',
+            'subscriber:boolean',
             'created_at:date',
             'updated_at:date',
         ],

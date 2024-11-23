@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\H;
 use app\models\Customer;
 use app\models\CustomerSearch;
 use Yii;
@@ -93,6 +94,18 @@ class CustomerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (!empty($model->date_last_purchase)) {
+            $dateLastPurchase = H::date2obj($model->date_last_purchase, 'Y-m-d');
+
+            if ($dateLastPurchase) {
+                $model->date_last_purchase = H::formatDate($dateLastPurchase);
+            }
+        }
+
+        if (empty($model->subscriber)) {
+            $model->subscriber = '0';
+        }
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
